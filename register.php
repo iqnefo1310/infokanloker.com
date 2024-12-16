@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" name="last_name" id="last_name" class="form-control" required>
+                <input type="text" name="last_name" id="last_name" class="form-control" >
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -89,9 +89,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
+            <label>
+                <input type="checkbox" name="cekpas" id="cekPass"> Tampilkan Kata Sandi
+            </label>
+            <br>
+            <br>
             <button type="submit" class="btn btn-success">Register</button>
+            <br>
+            <br>
+            <p>have acount?<a href="login.php"> login now</a></p>
         </form>
     </div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>

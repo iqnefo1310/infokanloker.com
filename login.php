@@ -42,9 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
+            <label>
+                <input type="checkbox" name="cekpas" id="cekPass"> Tampilkan Kata Sandi
+            </label>
+            <br>
+            <br>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
