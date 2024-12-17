@@ -14,7 +14,7 @@
         <div class="text-center mt-4">
             <a href="login.php" class="btn btn-primary">Login</a>
             <a href="register.php" class="btn btn-success">Register</a>
-            <a href="admin.php" class="btn btn-warning">Admin</a>
+            <a href="adminLogin.php" class="btn btn-warning">Admin</a>
         </div>
     </div>
 </body>

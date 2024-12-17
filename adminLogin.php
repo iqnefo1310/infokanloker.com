@@ -1,22 +1,26 @@
 <?php
 require 'config.php';
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM login_users WHERE username = ?");
+    // Ambil user berdasarkan username
+    $stmt = $conn->prepare("SELECT * FROM admins WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
     if ($user && password_verify($password, $user['password'])) {
-        session_start();
+        // Jika password cocok
         $_SESSION['user_id'] = $user['id'];
-        header("Location: dashboard.php");
+        $_SESSION['username'] = $user['username'];
+        header("Location: adminDashboard.php");
         exit;
     } else {
-        echo "<div class='alert alert-danger'>username atau pasword salah!</div>";
+        $error_message = "Username atau password salah!";
     }
 }
 ?>
@@ -32,7 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="container mt-5">
-        <h2>Login</h2>
+        <h2>Admin Login</h2>
+        <?php if (!empty($error_message)): ?>
+            <div class="alert alert-danger"><?php echo $error_message; ?></div>
+        <?php endif; ?>
         <form method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -43,16 +50,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
             <label>
-                <input type="checkbox" name="cekpas" id="cekPass"> Tampilkan Kata Sandi
+                <input type="checkbox" id="cekPass"> Tampilkan Kata Sandi
             </label>
-            <br>
-            <br>
+            <br><br>
             <button type="submit" class="btn btn-primary">Login</button>
-            <br>
-            <a href="index.php">kembali</a>
+            <br><br>
+            <a href="index.php">Kembali</a>
         </form>
     </div>
-    <script src="js/script.js"></script>
+    <script>
+        const passwordField = document.getElementById('password');
+        const showPasswordCheckbox = document.getElementById('cekPass');
+
+        showPasswordCheckbox.addEventListener('change', function () {
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        });
+    </script>
 </body>
 
 </html>

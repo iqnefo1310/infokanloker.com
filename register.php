@@ -97,7 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn btn-success">Register</button>
             <br>
             <br>
-            <p>have acount?<a href="login.php"> login now</a></p>
+            <p>Sudah Memiliki Akun? <a href="login.php"> Login Sekarang</a></p>
+            <a href="index.php">kembali</a>
         </form>
     </div>
     <script src="js/script.js"></script>
