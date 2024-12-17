@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && password_verify($password, $user['PASSWORD'])) {
         session_start();
         $_SESSION['user_id'] = $user['id'];
         header("Location: dashboard.php");
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5" width="100px">
         <h2>Login</h2>
         <form method="POST">
             <div class="mb-3">
@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <br>
             <button type="submit" class="btn btn-primary">Login</button>
             <br>
+            <p>Belum Punya Akun? <a href="register.php">Daftar Sekarang</a><p>
             <a href="index.php">kembali</a>
         </form>
     </div>

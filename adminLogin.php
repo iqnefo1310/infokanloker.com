@@ -55,20 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <br><br>
             <button type="submit" class="btn btn-primary">Login</button>
             <br><br>
-            <a href="index.php">Kembali</a>
+            <p>Belum Punya Akun? <a href="register.php">Daftar Sekarang</a><p>
+            <a href="index.php">kembali</a>
         </form>
     </div>
-    <script>
-        const passwordField = document.getElementById('password');
-        const showPasswordCheckbox = document.getElementById('cekPass');
-
-        showPasswordCheckbox.addEventListener('change', function () {
-            if (showPasswordCheckbox.checked) {
-                passwordField.type = 'text';
-            } else {
-                passwordField.type = 'password';
-            }
-        });
+    <script src="js/script.js">
     </script>
 </body>
 
