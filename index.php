@@ -14,9 +14,9 @@
     <div class="container mt-5">
         <h1 class="text-center">Welcome to Our Site</h1>
         <div class="text-center mt-4">
-            <a href="login.php" class="btn btn-primary btn-width">Lamar Pekerjaan</a>
-            <a href="adminLogin.php" class="btn btn-success btn-width">Admin</a>
-            <a href="commpanyLogin.php" class="btn btn-warning btn-width">Buka Lowongan Pekerjaan</a>
+            <a href="login.php" class="btn btn-primary btn-width">Cari Pekerjaan</a>
+            <a href="adminLogin.php" class="btn btn-success btn-width">Kelola Admin</a>
+            <a href="commpanyLogin.php" class="btn btn-warning btn-width">Kelola Perusahaan</a>
         </div>
     </div>
 

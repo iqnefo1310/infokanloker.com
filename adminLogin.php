@@ -3,24 +3,32 @@ require 'config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $passwords = trim($_POST['passwords']);
 
     // Ambil user berdasarkan username
     $stmt = $conn->prepare("SELECT * FROM admins WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    try{
+    if ($stmt) {
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-    if ($user && password_verify($password, $user['password'])) {
-        // Jika password cocok
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        header("Location: adminDashboard.php");
-        exit;
+        if ($user && password_verify($passwords, $user['passwords'])) {
+            // Jika passwords cocok
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            header("Location: adminDashboard.php");
+            exit;
+        } else {
+            $error_message = "Username atau passwords salah!";
+        }
     } else {
-        $error_message = "Username atau password salah!";
+        $error_message = "Terjadi kesalahan pada sistem. Silakan coba lagi nanti.";
+    }
+    } catch (Exception $e) {
+        $error_message = "Terjadi kesalahan pada sistem." + $e->getMessage();
     }
 }
 ?>
@@ -38,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container mt-5">
         <h2>Admin Login</h2>
         <?php if (!empty($error_message)): ?>
-            <div class="alert alert-danger"><?php echo $error_message; ?></div>
+            <div class="alert alert-danger"><?php echo htmlspecialchars($error_message); ?></div>
         <?php endif; ?>
         <form method="POST">
             <div class="mb-3">
@@ -46,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" name="username" id="username" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <label for="passwords" class="form-label">Passwords</label>
+                <input type="passwords" name="passwords" id="passwords" class="form-control" required>
             </div>
             <label>
                 <input type="checkbox" id="cekPass"> Tampilkan Kata Sandi
@@ -55,11 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <br><br>
             <button type="submit" class="btn btn-primary">Login</button>
             <br><br>
-            <p>Belum Punya Akun? <a href="register.php">Daftar Sekarang</a><p>
+            <p>Belum Punya Akun? <a href="adminRegst.php">Daftar Sekarang</a><p>
             <a href="index.php">kembali</a>
         </form>
     </div>
-    <script src="js/script.js">
+    <script>
+        document.getElementById('cekPass').addEventListener('change', function () {
+            const passwordsField = document.getElementById('passwords');
+            passwordsField.type = this.checked ? 'text' : 'passwords';
+        });
     </script>
 </body>
 

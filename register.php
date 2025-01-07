@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error_message = "Email sudah digunakan.";
     } else {
         // Cek apakah username sudah digunakan
-        $check_username_query = $conn->prepare("SELECT id FROM login_users WHERE username = ?");
+        $check_username_query = $conn->prepare("SELECT id FROM user_logins WHERE username = ?");
         $check_username_query->bind_param("s", $username);
         $check_username_query->execute();
         $check_username_query->store_result();
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $detail_user_id = $conn->insert_id;
 
                 // Masukkan data ke login_users
-                $stmt2 = $conn->prepare("INSERT INTO login_users (id, username, password) VALUES (?, ?, ?)");
+                $stmt2 = $conn->prepare("INSERT INTO user_logins (id, username, passwords) VALUES (?, ?, ?)");
                 $stmt2->bind_param("iss", $detail_user_id, $username, $password);
 
                 if ($stmt2->execute()) {
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" name="last_name" id="last_name" class="form-control" >
+                <input type="text" name="last_name" id="last_name" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -92,16 +92,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>
                 <input type="checkbox" name="cekpas" id="cekPass"> Tampilkan Kata Sandi
             </label>
-            <br>
-            <br>
+            <br><br>
             <button type="submit" class="btn btn-success">Register</button>
-            <br>
-            <br>
+            <br><br>
             <p>Sudah Memiliki Akun? <a href="login.php"> Login Sekarang</a></p>
-            <a href="index.php">kembali</a>
+            <a href="index.php">Kembali</a>
         </form>
     </div>
-    <script src="js/script.js"></script>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('cekPass').addEventListener('change', function() {
+            var passwordField = document.getElementById('password');
+            if (this.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        });
+    </script>
 </body>
 
 </html>
