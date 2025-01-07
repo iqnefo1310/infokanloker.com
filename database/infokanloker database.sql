@@ -1,8 +1,9 @@
-CREATE DATABASE IF NOT EXISTS infokanlokerdotcom;
+-- Create the database
+CREATE DATABASE infokanlokerdotcom;
 
 USE infokanlokerdotcom;
 
--- Tabel untuk detail pengguna
+-- Tabel untuk detail pengguna (general users)
 CREATE TABLE detail_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
@@ -12,10 +13,10 @@ CREATE TABLE detail_users (
 );
 
 -- Tabel untuk login pengguna
-CREATE TABLE login_users (
+CREATE TABLE user_logins (
     id INT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    PASSWORD VARCHAR(255) NOT NULL,
+    passwords VARCHAR(255) NOT NULL,
     FOREIGN KEY (id) REFERENCES detail_users(id) ON DELETE CASCADE
 );
 
@@ -23,17 +24,27 @@ CREATE TABLE login_users (
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    PASSWORD VARCHAR(255) NOT NULL
+    passwords VARCHAR(255) NOT NULL
 );
 
--- Tabel untuk kategori pekerjaan
+-- Tabel untuk perusahaan (companies)
+CREATE TABLE companies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    company_name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    passwords VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE companies ADD COLUMN email VARCHAR(255) NOT NULL;
+
+-- Tabel untuk kategori pekerjaan (job categories)
 CREATE TABLE job_categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     NAME VARCHAR(100) NOT NULL UNIQUE,
     description TEXT
 );
 
--- Tabel untuk lowongan pekerjaan (dengan foreign key diperbaiki)
+-- Tabel untuk lowongan pekerjaan (job postings)
 CREATE TABLE jobs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     company_id INT NOT NULL,
@@ -43,11 +54,11 @@ CREATE TABLE jobs (
     location VARCHAR(100),
     salary DECIMAL(10, 2),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (company_id) REFERENCES detail_users(id) ON DELETE CASCADE,
+    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES job_categories(id) ON DELETE CASCADE
 );
 
--- Tabel untuk lamaran pekerjaan (dengan foreign key diperbaiki)
+-- Tabel untuk lamaran pekerjaan (job applications)
 CREATE TABLE applications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     job_id INT NOT NULL,
@@ -58,7 +69,3 @@ CREATE TABLE applications (
     FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
     FOREIGN KEY (applicant_id) REFERENCES detail_users(id) ON DELETE CASCADE
 );
-
--- Data awal untuk admin
-INSERT INTO admins (username, PASSWORD) 
-VALUES ('admin', MD5('asd'));
