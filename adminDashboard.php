@@ -10,7 +10,7 @@
         body {
             min-height: 100vh;
             overflow-x: hidden;
-            background-color: #f8f9fa;
+            background-color:rgb(23, 93, 163);
         }
 
         .sidebar {
