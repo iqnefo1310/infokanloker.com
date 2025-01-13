@@ -69,3 +69,17 @@ CREATE TABLE applications (
     FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
     FOREIGN KEY (applicant_id) REFERENCES detail_users(id) ON DELETE CASCADE
 );
+
+-- Menambahkan kategori pekerjaan ke dalam tabel job_categories
+INSERT INTO job_categories (NAME, description)
+VALUES
+    ('Teknologi Informasi (IT)', 'Pekerjaan terkait pengembangan perangkat lunak, pemrograman, keamanan siber, dan dukungan teknologi.'),
+    ('Keuangan', 'Pekerjaan yang berfokus pada pengelolaan keuangan, akuntansi, analisis keuangan, dan audit.'),
+    ('Pemasaran', 'Pekerjaan yang melibatkan strategi, periklanan, promosi, dan riset pasar untuk meningkatkan penjualan.'),
+    ('Sumber Daya Manusia (SDM)', 'Pekerjaan yang berfokus pada rekrutmen, pelatihan, pengembangan karyawan, dan manajemen kinerja.'),
+    ('Operasional', 'Pekerjaan yang berfokus pada manajemen proses bisnis dan kegiatan sehari-hari perusahaan.'),
+    ('Penjualan', 'Pekerjaan yang berfokus pada negosiasi, pemeliharaan hubungan dengan pelanggan, dan mencapai target penjualan.'),
+    ('Pendidikan', 'Pekerjaan dalam bidang pengajaran, pelatihan, dan pengembangan kurikulum.'),
+    ('Kesehatan', 'Pekerjaan di rumah sakit, klinik, dan fasilitas kesehatan yang melibatkan perawatan pasien dan penelitian medis.'),
+    ('Hukum', 'Pekerjaan terkait konsultasi hukum, pengacara, dan penyelesaian sengketa.'),
+    ('Logistik', 'Pekerjaan yang berfokus pada pengelolaan rantai pasokan, pengiriman barang, dan transportasi.');

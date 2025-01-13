@@ -49,3 +49,116 @@ footer {
     padding: 20px 0;
     margin-top: 20px;
 }
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+
+/* =====================================================================================================================================
+
+                                 halaman utama                                 
+
+===================================================================================================================================== */
+
+/* style.css */
+
+/* Atur gaya umum */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Gaya tombol */
+.btn-width {
+    width: 200px;
+    margin: 5px;
+}
+
+/* Gaya ikon media sosial di footer */
+footer .social-icons a {
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+footer .social-icons a:hover {
+    color: #ffc107;
+}
+
+/* Gaya kontak di footer */
+footer .contact p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+/* =====================================================================================================================================
+
+                                 header                            
+
+===================================================================================================================================== */
+/* Header Style */
+header {
+    background-color: #007bff;
+    padding: 20px 0;
+}
+
+header .logo-container {
+    text-align: center;
+}
+
+header .logo {
+    width: 150px;
+}
+
+header .header-container {
+    text-align: center;
+}
+
+header .heading {
+    font-size: 2rem;
+    color: white;
+}
+
+header .button-group a {
+    margin: 10px;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+header .button-group .btn-primary {
+    background-color: #007bff;
+}
+
+header .button-group .btn-success {
+    background-color: #28a745;
+}
+
+header .button-group .btn-warning {
+    background-color: #ffc107;
+}
+
+/* Footer Style */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+footer .social-icons {
+    margin: 15px 0;
+}
+
+footer .social-icons .social-link {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+footer .contact p {
+    margin: 5px 0;
+}
