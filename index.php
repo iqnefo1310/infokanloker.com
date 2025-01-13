@@ -53,6 +53,8 @@
     </main>
 
     <!-- Footer -->
+    <footer>
+        &copy; 2024 - Semua Hak Dilindungi. Dibuat oleh Tim Kami.
     <footer class="bg-dark text-white mt-5 py-4">
         <div class="container text-center">
             <h5>Ikuti Kami</h5>
