@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             min-height: 100vh;
             overflow-x: hidden;
-            background-color:rgb(23, 93, 163);
+            background-color: rgb(186, 194, 202);
         }
 
         .sidebar {
@@ -41,10 +42,15 @@
             color: #fff;
             text-align: left;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .sidebar button:hover {
             background-color: #6c757d;
+        }
+
+        .sidebar button i {
+            margin-right: 10px;
         }
 
         .content {
@@ -63,6 +69,20 @@
         .alert {
             margin-top: 20px;
         }
+
+        /* Hover effect for sidebar buttons */
+        .sidebar button:hover {
+            background-color: #007bff;
+            transform: scale(1.05);
+        }
+
+        .sidebar button i {
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar button:hover i {
+            transform: rotate(15deg);
+        }
     </style>
 </head>
 
@@ -71,11 +91,21 @@
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <hr>
-        <button id="btnHome">Dashboard</button>
-        <button id="btnManageUsers">Manage Users</button>
-        <button id="btnManageJobs">Manage Jobs</button>
-        <button id="btnManageApplications">Manage Applications</button>
-        <a href="logout.php" class="btn btn-danger w-100 mt-3">Logout</a>
+        <button id="btnHome">
+            <i class="bi bi-house-door"></i> Dashboard
+        </button>
+        <button id="btnManageUsers">
+            <i class="bi bi-person"></i> Manage Users
+        </button>
+        <button id="btnManageJobs">
+            <i class="bi bi-briefcase"></i> Manage Jobs
+        </button>
+        <button id="btnManageApplications">
+            <i class="bi bi-file-earmark-text"></i> Manage Applications
+        </button>
+        <a href="logout.php" class="btn btn-danger w-100 mt-3">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
     </div>
 
     <div class="content">
@@ -158,8 +188,12 @@
                             <td>{$full_name}</td>
                             <td>{$user['email']}</td>
                             <td>
-                                <a href='edit_user.php?id={$user['id']}' class='btn btn-warning btn-sm'>Edit</a>
-                                <a href='delete_user.php?id={$user['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+                                <a href='edit_user.php?id={$user['id']}' class='btn btn-warning btn-sm'>
+                                    <i class='bi bi-pencil-square'></i> Edit
+                                </a>
+                                <a href='delete_user.php?id={$user['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this user?');\">
+                                    <i class='bi bi-trash'></i> Delete
+                                </a>
                             </td>
                         </tr>";
                     }
@@ -192,13 +226,16 @@ while ($job = $jobs->fetch_assoc()) {
         <td>{$job['title']}</td>
         <td>{$job['company_name']}</td>
         <td>
-            <a href='editJob.php?id={$job['id']}' class='btn btn-warning btn-sm'>Edit</a>
-            <a href='deleteJob.php?id={$job['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this job?');\">Delete</a>
+            <a href='editJob.php?id={$job['id']}' class='btn btn-warning btn-sm'>
+                <i class='bi bi-pencil-square'></i> Edit
+            </a>
+            <a href='deleteJob.php?id={$job['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this job?');\">
+                <i class='bi bi-trash'></i> Delete
+            </a>
         </td>
     </tr>";
 }
 ?>
-
                 </tbody>
             </table>
         </div>
@@ -226,8 +263,12 @@ while ($job = $jobs->fetch_assoc()) {
                             <td>{$app['job_id']}</td>
                             <td>{$app['status']}</td>
                             <td>
-                                <button class='btn btn-success btn-sm'>Approve</button>
-                                <button class='btn btn-danger btn-sm'>Reject</button>
+                                <button class='btn btn-success btn-sm'>
+                                    <i class='bi bi-check'></i> Approve
+                                </button>
+                                <button class='btn btn-danger btn-sm'>
+                                    <i class='bi bi-x'></i> Reject
+                                </button>
                             </td>
                         </tr>";
                     }
