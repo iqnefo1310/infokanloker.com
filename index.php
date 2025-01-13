@@ -43,7 +43,7 @@
 
     <!-- Footer -->
     <footer>
-        &copy; 2024 - Semua Hak Dilindungi. Dibuat dengan ❤️ oleh Tim Kami.
+        &copy; 2024 - Semua Hak Dilindungi. Dibuat oleh Tim Kami.
     </footer>
 </body>
 
