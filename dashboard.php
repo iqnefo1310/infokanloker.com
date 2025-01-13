@@ -17,8 +17,12 @@ $query->bind_result($first_name, $last_name, $email);
 $query->fetch();
 $query->close();
 
-// Fetch job listings
-$jobs_query = $conn->prepare("SELECT id, title, company_id, location, salary FROM jobs");
+// Fetch job listings with company name
+$jobs_query = $conn->prepare("
+    SELECT jobs.id, jobs.title, companies.company_name, jobs.location, jobs.salary 
+    FROM jobs 
+    JOIN companies ON jobs.company_id = companies.id
+");
 $jobs_query->execute();
 $jobs_result = $jobs_query->get_result();
 $jobs_query->close();
@@ -26,17 +30,74 @@ $jobs_query->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Inline CSS for header and hover effects */
+        .navbar-nav .nav-item .nav-link {
+            font-size: 1.2rem;
+            color: #333;
+            padding: 10px 15px;
+        }
+
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #007bff;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .navbar-toggler {
+            border-color: #333;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #333;
+        }
+
+        .container h2,
+        .container h4 {
+            color: #333;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer .social-icons a {
+            color: #fff;
+            margin: 0 10px;
+        }
+
+        footer .social-icons a:hover {
+            color: #007bff;
+        }
+
+        footer .contact p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="dashboard.php">InfokanLoker</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -63,7 +124,7 @@ $jobs_query->close();
 
     <div class="container mt-5">
         <h2>Welcome, <?php echo htmlspecialchars($first_name . ' ' . $last_name); ?>!</h2>
-        
+
         <!-- User Profile -->
         <div class="card mb-4">
             <div class="card-header">
@@ -89,19 +150,39 @@ $jobs_query->close();
             </thead>
             <tbody>
                 <?php while ($job = $jobs_result->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($job['title']); ?></td>
-                    <td><?php echo htmlspecialchars($job['company_id']); ?></td>
-                    <td><?php echo htmlspecialchars($job['location']); ?></td>
-                    <td><?php echo htmlspecialchars($job['salary']); ?></td>
-                    <td><a href="apply.php?job_id=<?php echo $job['id']; ?>" class="btn btn-primary">Apply</a></td>
-                </tr>
+                    <tr>
+                        <td><?php echo htmlspecialchars($job['title']); ?></td>
+                        <td><?php echo htmlspecialchars($job['company_name']); ?></td>
+                        <td><?php echo htmlspecialchars($job['location']); ?></td>
+                        <td><?php echo htmlspecialchars($job['salary']); ?></td>
+                        <td><a href="apply.php?job_id=<?php echo $job['id']; ?>" class="btn btn-primary">Apply</a></td>
+                    </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h5>Follow Us</h5>
+            <div class="social-icons mt-3">
+                <a href="#" class="text-white mx-2"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+            <div class="contact mt-4">
+                <p><i class="fas fa-envelope"></i> Email: info@infokanloker.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Address: Jl. Contoh No.123, Jakarta</p>
+            </div>
+            <p class="mt-3">&copy; 2024 - All Rights Reserved. Created with ❤ by Our Team.</p>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
+
 </html>
