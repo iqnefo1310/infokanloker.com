@@ -1,0 +1,51 @@
+.btn-width{
+    width: 300px;
+    color: white;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.btn-width:hover{
+    color: black;
+}
+
+/* Reset margin dan padding body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Styling untuk main content */
+main {
+    padding: 50px;
+    margin: 20px auto;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling untuk container informasi */
+main .info,
+main .keunggulan,
+main .perusahaan {
+    margin-bottom: 30px;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+main h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Styling untuk footer */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
