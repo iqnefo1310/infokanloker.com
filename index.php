@@ -170,17 +170,23 @@ main h2:hover {
 <body>
 
     <!-- Header -->
-    <header>
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <img src="assets/LOGO-removebg-preview.png" alt="Logo Infokan Loker">
-            <h1>Welcome to Job Loker</h1>
-            <div>
-                <a href="login.php"><i class="fas fa-briefcase"></i> Cari Pekerjaan</a>
-                <a href="adminLogin.php"><i class="fas fa-user-shield"></i> Kelola Admin</a>
-                <a href="commpanyLogin.php"><i class="fas fa-building"></i> Kelola Perusahaan</a>
-            </div>
+    <header style="background: linear-gradient(135deg,rgb(177, 206, 250),rgb(14, 67, 117)); padding: 20px; text-align: center; color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <img src="assets/2-removebg-preview.png" alt="Logo Infokan Loker" style="max-width: 200px; height: auto; margin-bottom: 15px;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Welcome to JOB Loker</h1>
+        <div>
+            <a href="login.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
+                <i class="fas fa-briefcase"></i> Cari Pekerjaan
+            </a>
+            <a href="adminLogin.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
+                <i class="fas fa-user-shield"></i> Kelola Admin
+            </a>
+            <a href="commpanyLogin.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
+                <i class="fas fa-building"></i> Kelola Perusahaan
+            </a>
         </div>
-    </header>
+    </div>
+</header>
 
     <!-- Main content -->
     <main>
@@ -203,25 +209,10 @@ main h2:hover {
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h5>Ikuti Kami</h5>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
-                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
-                <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
-            </div>
-            <div>
-                <p><i class="fas fa-envelope"></i> Email: info@infokanloker.com</p>
-                <p><i class="fas fa-map-marker-alt"></i> Alamat: Jl. Contoh No.123, Jakarta</p>
-            </div>
-            <p>&copy; 2024 Job Loker - Semua Hak Dilindungi. Dibuat dengan ❤️ oleh Tim Kami.</p>
-        </div>
-    </footer>
+    <!-- Include Footer -->
+    <?php include 'includes/footer.php'; ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
-
 </html>

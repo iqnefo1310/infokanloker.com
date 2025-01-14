@@ -69,6 +69,8 @@ CREATE TABLE applications (
     FOREIGN KEY (job_id) REFERENCES jobs(id) ON DELETE CASCADE,
     FOREIGN KEY (applicant_id) REFERENCES detail_users(id) ON DELETE CASCADE
 );
+ALTER TABLE applications ADD COLUMN applied_on DATETIME DEFAULT CURRENT_TIMESTAMP;
+
 INSERT INTO applications (job_id, applicant_id, RESUME, STATUS) VALUES
 (1, 1, 'resume_1.pdf', 'dalam_proses'),
 (2, 1, 'resume_2.pdf', 'diterima'),

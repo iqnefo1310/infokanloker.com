@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- Header -->
+    <?php include 'includes/header.php'; ?>
+
     <div class="container mt-5">
         <h2>Admin Registration</h2>
         <?php if (!empty($error_message)): ?>
@@ -53,11 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <label for="passwords" class="form-label">Passwords</label>
-                <input type="passwords" name="passwords" id="passwords" class="form-control" required>
+                <input type="password" name="passwords" id="passwords" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="confirm_passwords" class="form-label">Confirm Passwords</label>
-                <input type="passwords" name="confirm_passwords" id="confirm_passwords" class="form-control" required>
+                <input type="password" name="confirm_passwords" id="confirm_passwords" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>
             <br><br>
@@ -65,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php">Kembali</a>
         </form>
     </div>
+
+    <!-- Footer -->
+    <?php include 'includes/footer.php'; ?>
 </body>
 
 </html>

@@ -110,10 +110,17 @@
 
     <div class="content">
         <!-- Dashboard Section -->
-        <div id="dashboardSection">
-            <h1>Welcome, Admin!</h1>
-            <p>Use the buttons in the sidebar to navigate through the admin panel features.</p>
-
+        <div id="dashboardSection" style="display: flex; justify-content: center; align-items: center; flex-direction: column; height: 30vh; text-align: center;">
+    <!-- <h1>Welcome, Admin!</h1> -->
+    <p>Gunakan tombol di sidebar untuk menavigasi melalui fitur panel admin.</p>
+</div>
+<!-- Gambar Admin -->
+<!-- <div style="text-align: center; margin-bottom: 20px;">
+        <img src="assets/lisa.jpg" alt="Admin Avatar" style="max-width: 150px; border-radius: 50%; border: 3px solid #ddd;">
+    </div> -->
+    <div style="text-align: center; margin-bottom: 5px;">
+    <img src="assets/hai admin.png" alt="Pamflet" style="max-width: 100%; height: auto; border-radius: 1px;">
+</div>
             <?php
             // Include database connection
             require 'config.php';
