@@ -60,6 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- Include Header -->
+    <?php include('includes/header.php'); ?>
+
     <div class="container mt-5">
         <h2>Register</h2>
         <?php if (!empty($success_message)): ?>
@@ -99,6 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php">Kembali</a>
         </form>
     </div>
+
+    <!-- Include Footer -->
+    <?php include('includes/footer.php'); ?>
 
     <script>
         // Toggle password visibility

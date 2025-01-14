@@ -8,32 +8,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Ambil user berdasarkan username
     $stmt = $conn->prepare("SELECT * FROM admins WHERE username = ?");
-    try{
-    if ($stmt) {
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
+    try {
+        if ($stmt) {
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
 
-        if ($user && password_verify($passwords, $user['passwords'])) {
-            // Jika passwords cocok
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            header("Location: adminDashboard.php");
-            exit;
+            if ($user && password_verify($passwords, $user['passwords'])) {
+                // Jika passwords cocok
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                header("Location: adminDashboard.php");
+                exit;
+            } else {
+                $error_message = "Username atau passwords salah!";
+            }
         } else {
-            $error_message = "Username atau passwords salah!";
+            $error_message = "Terjadi kesalahan pada sistem. Silakan coba lagi nanti.";
         }
-    } else {
-        $error_message = "Terjadi kesalahan pada sistem. Silakan coba lagi nanti.";
-    }
     } catch (Exception $e) {
-        $error_message = "Terjadi kesalahan pada sistem." + $e->getMessage();
+        $error_message = "Terjadi kesalahan pada sistem. " . $e->getMessage();
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -43,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- Header -->
+    <?php include 'includes/header.php'; ?>
+
     <div class="container mt-5">
         <h2>Admin Login</h2>
         <?php if (!empty($error_message)): ?>
@@ -55,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <label for="passwords" class="form-label">Passwords</label>
-                <input type="passwords" name="passwords" id="passwords" class="form-control" required>
+                <input type="password" name="passwords" id="passwords" class="form-control" required>
             </div>
             <label>
                 <input type="checkbox" id="cekPass"> Tampilkan Kata Sandi
@@ -67,10 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php">kembali</a>
         </form>
     </div>
+
+    <!-- Footer -->
+    <?php include 'includes/footer.php'; ?>
+
     <script>
         document.getElementById('cekPass').addEventListener('change', function () {
             const passwordsField = document.getElementById('passwords');
-            passwordsField.type = this.checked ? 'text' : 'passwords';
+            passwordsField.type = this.checked ? 'text' : 'password';
         });
     </script>
 </body>

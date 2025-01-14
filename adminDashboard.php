@@ -6,11 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             min-height: 100vh;
             overflow-x: hidden;
+<<<<<<< HEAD
             background-color:rgb(135, 171, 207);
+=======
+            background-color: rgb(186, 194, 202);
+>>>>>>> 9c7a0875f8a5c377f7ec9c659722049ea5aec8de
         }
 
         .sidebar {
@@ -41,10 +46,15 @@
             color: #fff;
             text-align: left;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .sidebar button:hover {
             background-color: #6c757d;
+        }
+
+        .sidebar button i {
+            margin-right: 10px;
         }
 
         .content {
@@ -63,6 +73,20 @@
         .alert {
             margin-top: 20px;
         }
+
+        /* Hover effect for sidebar buttons */
+        .sidebar button:hover {
+            background-color: #007bff;
+            transform: scale(1.05);
+        }
+
+        .sidebar button i {
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar button:hover i {
+            transform: rotate(15deg);
+        }
     </style>
 </head>
 
@@ -71,19 +95,36 @@
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <hr>
-        <button id="btnHome">Dashboard</button>
-        <button id="btnManageUsers">Manage Users</button>
-        <button id="btnManageJobs">Manage Jobs</button>
-        <button id="btnManageApplications">Manage Applications</button>
-        <a href="logout.php" class="btn btn-danger w-100 mt-3">Logout</a>
+        <button id="btnHome">
+            <i class="bi bi-house-door"></i> Dashboard
+        </button>
+        <button id="btnManageUsers">
+            <i class="bi bi-person"></i> Manage Users
+        </button>
+        <button id="btnManageJobs">
+            <i class="bi bi-briefcase"></i> Manage Jobs
+        </button>
+        <button id="btnManageApplications">
+            <i class="bi bi-file-earmark-text"></i> Manage Applications
+        </button>
+        <a href="logout.php" class="btn btn-danger w-100 mt-3">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
     </div>
 
     <div class="content">
         <!-- Dashboard Section -->
-        <div id="dashboardSection">
-            <h1>Welcome, Admin!</h1>
-            <p>Use the buttons in the sidebar to navigate through the admin panel features.</p>
-
+        <div id="dashboardSection" style="display: flex; justify-content: center; align-items: center; flex-direction: column; height: 30vh; text-align: center;">
+    <!-- <h1>Welcome, Admin!</h1> -->
+    <p>Gunakan tombol di sidebar untuk menavigasi melalui fitur panel admin.</p>
+</div>
+<!-- Gambar Admin -->
+<!-- <div style="text-align: center; margin-bottom: 20px;">
+        <img src="assets/lisa.jpg" alt="Admin Avatar" style="max-width: 150px; border-radius: 50%; border: 3px solid #ddd;">
+    </div> -->
+    <div style="text-align: center; margin-bottom: 5px;">
+    <img src="assets/hai admin.png" alt="Pamflet" style="max-width: 100%; height: auto; border-radius: 1px;">
+</div>
             <?php
             // Include database connection
             require 'config.php';
@@ -158,8 +199,12 @@
                             <td>{$full_name}</td>
                             <td>{$user['email']}</td>
                             <td>
-                                <a href='edit_user.php?id={$user['id']}' class='btn btn-warning btn-sm'>Edit</a>
-                                <a href='delete_user.php?id={$user['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a>
+                                <a href='edit_user.php?id={$user['id']}' class='btn btn-warning btn-sm'>
+                                    <i class='bi bi-pencil-square'></i> Edit
+                                </a>
+                                <a href='delete_user.php?id={$user['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this user?');\">
+                                    <i class='bi bi-trash'></i> Delete
+                                </a>
                             </td>
                         </tr>";
                     }
@@ -192,17 +237,21 @@ while ($job = $jobs->fetch_assoc()) {
         <td>{$job['title']}</td>
         <td>{$job['company_name']}</td>
         <td>
-            <a href='editJob.php?id={$job['id']}' class='btn btn-warning btn-sm'>Edit</a>
-            <a href='deleteJob.php?id={$job['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this job?');\">Delete</a>
+            <a href='editJob.php?id={$job['id']}' class='btn btn-warning btn-sm'>
+                <i class='bi bi-pencil-square'></i> Edit
+            </a>
+            <a href='deleteJob.php?id={$job['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this job?');\">
+                <i class='bi bi-trash'></i> Delete
+            </a>
         </td>
     </tr>";
 }
 ?>
-
                 </tbody>
             </table>
         </div>
 
+<<<<<<< HEAD
 <!-- Manage Applications Section -->
 <div id="manageApplicationsSection" class="hidden">
     <h2>Manage Applications</h2>
@@ -247,6 +296,45 @@ while ($job = $jobs->fetch_assoc()) {
     </table>
 </div>
 
+=======
+        <!-- Manage Applications Section -->
+        <div id="manageApplicationsSection" class="hidden">
+            <h2>Manage Applications</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Job</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $applications = $conn->query("SELECT * FROM applications");
+                    while ($app = $applications->fetch_assoc()) {
+                        echo "<tr>
+                            <td>{$app['id']}</td>
+                            <td>{$app['user_id']}</td>
+                            <td>{$app['job_id']}</td>
+                            <td>{$app['status']}</td>
+                            <td>
+                                <button class='btn btn-success btn-sm'>
+                                    <i class='bi bi-check'></i> Approve
+                                </button>
+                                <button class='btn btn-danger btn-sm'>
+                                    <i class='bi bi-x'></i> Reject
+                                </button>
+                            </td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+>>>>>>> 9c7a0875f8a5c377f7ec9c659722049ea5aec8de
 
     <script>
         const dashboardSection = document.getElementById('dashboardSection');

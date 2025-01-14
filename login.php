@@ -1,5 +1,6 @@
 <?php
 require 'config.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -16,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: dashboard.php");
         exit;
     } else {
-        echo "<div class='alert alert-danger'>username atau pasword salah!</div>";
+        echo "<div class='alert alert-danger'>Username atau password salah!</div>";
     }
 }
 ?>
@@ -31,6 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- Include Header -->
+    <?php include('includes/header.php'); ?>
+
     <div class="container mt-5" width="100px">
         <h2>Login</h2>
         <form method="POST">
@@ -45,15 +49,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>
                 <input type="checkbox" name="cekpas" id="cekPass"> Tampilkan Kata Sandi
             </label>
-            <br>
-            <br>
+            <br><br>
             <button type="submit" class="btn btn-primary">Login</button>
             <br>
-            <p>Belum Punya Akun? <a href="register.php">Daftar Sekarang</a><p>
-            <a href="index.php">kembali</a>
+            <p>Belum Punya Akun? <a href="register.php">Daftar Sekarang</a></p>
+            <a href="index.php">Kembali</a>
         </form>
     </div>
+
+    <!-- Include Footer -->
+    <?php include('includes/footer.php'); ?>
+
     <script src="js/script.js"></script>
+    <script>
+        // Toggle password visibility
+        const cekPass = document.getElementById('cekPass');
+        const passwordField = document.getElementById('password');
+        cekPass.addEventListener('change', () => {
+            if (cekPass.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        });
+    </script>
 </body>
 
 </html>
