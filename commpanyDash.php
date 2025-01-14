@@ -40,12 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_job'])) {
     $category_id = $_POST['category_id'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
-    
-    $update_query = "UPDATE jobs SET title = ?, category_id = ?, location = ?, salary = ? WHERE id = ?";
+    $description = $_POST['description']; // Ambil deskripsi dari form
+
+    // Debugging: Periksa data deskripsi
+    var_dump($description); // Pastikan deskripsi tidak kosong
+
+    $update_query = "UPDATE jobs SET title = ?, category_id = ?, location = ?, salary = ?, description = ? WHERE id = ?";
     $stmt = $conn->prepare($update_query);
-    $stmt->bind_param("ssssd", $title, $category_id, $location, $salary, $edit_id);
+    $stmt->bind_param("sssssi", $title, $category_id, $location, $salary, $description, $edit_id); // Pastikan deskripsi di-bind
     $stmt->execute();
-    header("Location: commpanyDash.php"); // Redirect after update
+    header("Location: commpanyDash.php"); // Redirect setelah update
     exit;
 }
 
@@ -55,13 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_job'])) {
     $category_id = $_POST['category_id'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
-    
-    $insert_query = "INSERT INTO jobs (company_id, title, category_id, location, salary, created_at) 
-                     VALUES (?, ?, ?, ?, ?, NOW())";
+    $description = $_POST['description']; // Ambil deskripsi dari form
+
+    // Debugging: Periksa data deskripsi
+    var_dump($description); // Pastikan deskripsi tidak kosong
+
+    // Query untuk menambahkan pekerjaan
+    $insert_query = "INSERT INTO jobs (company_id, title, category_id, location, salary, description, created_at) 
+                     VALUES (?, ?, ?, ?, ?, ?, NOW())";
     $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("isssd", $company_id, $title, $category_id, $location, $salary);
+    $stmt->bind_param("isssss", $company_id, $title, $category_id, $location, $salary, $description); // Pastikan deskripsi di-bind
     $stmt->execute();
-    header("Location: commpanyDash.php"); // Redirect after adding
+    header("Location: commpanyDash.php"); // Redirect setelah menambahkan
     exit;
 }
 
@@ -78,12 +87,14 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Dashboard</title>
     <link rel="stylesheet" href="css/comdash.css"> <!-- Add your CSS file -->
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -118,7 +129,7 @@ $result = $stmt->get_result();
                     <form action="commpanyDash.php" method="POST">
                         <label for="title">Job Title:</label>
                         <input type="text" name="title" required>
-                        
+
                         <label for="category_id">Category:</label>
                         <select name="category_id" required>
                             <?php
@@ -129,13 +140,16 @@ $result = $stmt->get_result();
                             }
                             ?>
                         </select>
-                        
+
                         <label for="location">Location:</label>
                         <input type="text" name="location" required>
-                        
+
                         <label for="salary">Salary:</label>
                         <input type="number" name="salary" required>
-                        
+
+                        <label for="description">Description:</label>
+                        <textarea name="description" required></textarea>
+
                         <button type="submit" name="add_job">Add Job</button>
                     </form>
                 </section>
@@ -147,10 +161,10 @@ $result = $stmt->get_result();
                     <h2>Edit Job</h2>
                     <form action="commpanyDash.php" method="POST">
                         <input type="hidden" name="edit_id" value="<?php echo $job['id']; ?>">
-                        
+
                         <label for="title">Job Title:</label>
                         <input type="text" name="title" value="<?php echo $job['title']; ?>" required>
-                        
+
                         <label for="category_id">Category:</label>
                         <select name="category_id" required>
                             <?php
@@ -162,13 +176,16 @@ $result = $stmt->get_result();
                             }
                             ?>
                         </select>
-                        
+
                         <label for="location">Location:</label>
                         <input type="text" name="location" value="<?php echo $job['location']; ?>" required>
-                        
+
                         <label for="salary">Salary:</label>
                         <input type="number" name="salary" value="<?php echo $job['salary']; ?>" required>
-                        
+
+                        <label for="description">Description:</label>
+                        <textarea name="description" required><?php echo $job['description']; ?></textarea>
+
                         <button type="submit" name="edit_job">Update Job</button>
                     </form>
                 </section>
@@ -199,7 +216,8 @@ $result = $stmt->get_result();
                                     <td><?php echo $row['created_at']; ?></td>
                                     <td>
                                         <a href="commpanyDash.php?edit_id=<?php echo $row['id']; ?>">Edit</a>
-                                        <a href="commpanyDash.php?delete_id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                                        <a href="commpanyDash.php?delete_id=<?php echo $row['id']; ?>" 
+                                           onclick="return confirm('Are you sure?')">Delete</a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
@@ -212,4 +230,5 @@ $result = $stmt->get_result();
         </div>
     </div>
 </body>
+
 </html>

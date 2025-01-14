@@ -18,11 +18,7 @@ $query->fetch();
 $query->close();
 
 // Fetch job listings with company name
-$jobs_query = $conn->prepare("
-    SELECT jobs.id, jobs.title, companies.company_name, jobs.location, jobs.salary 
-    FROM jobs 
-    JOIN companies ON jobs.company_id = companies.id
-");
+$jobs_query = $conn->prepare("SELECT jobs.id, jobs.title, companies.company_name, jobs.location, jobs.salary, jobs.description FROM jobs JOIN companies ON jobs.company_id = companies.id");
 $jobs_query->execute();
 $jobs_result = $jobs_query->get_result();
 $jobs_query->close();
@@ -38,56 +34,25 @@ $jobs_query->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Inline CSS for header and hover effects */
-        .navbar-nav .nav-item .nav-link {
-            font-size: 1.2rem;
-            color: #333;
-            padding: 10px 15px;
-        }
-
-        .navbar-nav .nav-item .nav-link:hover {
-            color: #007bff;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .navbar-toggler {
-            border-color: #333;
-        }
-
-        .navbar-toggler-icon {
-            background-color: #333;
-        }
-
-        .container h2,
-        .container h4 {
-            color: #333;
-        }
-
-        /* Footer styling */
-        footer {
-            background-color: #343a40;
-            color: #fff;
+        .job-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
             padding: 20px;
-            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        footer .social-icons a {
-            color: #fff;
-            margin: 0 10px;
-        }
-
-        footer .social-icons a:hover {
+        .job-card h5 {
             color: #007bff;
+            margin-bottom: 10px;
         }
 
-        footer .contact p {
+        .job-card p {
             margin: 5px 0;
+        }
+
+        .job-card .btn {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -138,28 +103,16 @@ $jobs_query->close();
 
         <!-- Job Listings -->
         <h4>Available Job Listings</h4>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Company</th>
-                    <th>Location</th>
-                    <th>Salary</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($job = $jobs_result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($job['title']); ?></td>
-                        <td><?php echo htmlspecialchars($job['company_name']); ?></td>
-                        <td><?php echo htmlspecialchars($job['location']); ?></td>
-                        <td><?php echo htmlspecialchars($job['salary']); ?></td>
-                        <td><a href="apply.php?job_id=<?php echo $job['id']; ?>" class="btn btn-primary">Apply</a></td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+        <?php while ($job = $jobs_result->fetch_assoc()): ?>
+            <div class="job-card">
+                <h5><?php echo htmlspecialchars($job['title']); ?></h5>
+                <p><strong>Company:</strong> <?php echo htmlspecialchars($job['company_name']); ?></p>
+                <p><strong>Location:</strong> <?php echo htmlspecialchars($job['location']); ?></p>
+                <p><strong>Salary:</strong> <?php echo htmlspecialchars($job['salary']); ?></p>
+                <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($job['description'])); ?></p>
+                <a href="apply.php?job_id=<?php echo $job['id']; ?>" class="btn btn-primary">Apply Now</a>
+            </div>
+        <?php endwhile; ?>
     </div>
 
     <!-- Footer -->

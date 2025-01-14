@@ -64,7 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
                 <div class="mt-3 text-center">
-                    <a href="commpanyRegst.php">Don't have an account? Register here</a>
+                <a href="commpanyRegst.php">Don't have an account? Register here</a>
+                <br>
+                <br>
+                <button>
+                    <a href="index.php">Back</a>
+                </button>
+                <br>
                 </div>
             </div>
         </div>

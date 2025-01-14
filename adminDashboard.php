@@ -10,7 +10,7 @@
         body {
             min-height: 100vh;
             overflow-x: hidden;
-            background-color:rgb(23, 93, 163);
+            background-color:rgb(135, 171, 207);
         }
 
         .sidebar {
@@ -203,39 +203,50 @@ while ($job = $jobs->fetch_assoc()) {
             </table>
         </div>
 
-        <!-- Manage Applications Section -->
-        <div id="manageApplicationsSection" class="hidden">
-            <h2>Manage Applications</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Job</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $applications = $conn->query("SELECT * FROM applications");
-                    while ($app = $applications->fetch_assoc()) {
-                        echo "<tr>
-                            <td>{$app['id']}</td>
-                            <td>{$app['user_id']}</td>
-                            <td>{$app['job_id']}</td>
-                            <td>{$app['status']}</td>
-                            <td>
-                                <button class='btn btn-success btn-sm'>Approve</button>
-                                <button class='btn btn-danger btn-sm'>Reject</button>
-                            </td>
-                        </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<!-- Manage Applications Section -->
+<div id="manageApplicationsSection" class="hidden">
+    <h2>Manage Applications</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Ensure 'applications' table contains 'user_id' and 'status' columns
+            $applications = $conn->query("SELECT * FROM applications");
+
+            // Check if there are applications and the required keys exist
+            if ($applications->num_rows > 0) {
+                while ($app = $applications->fetch_assoc()) {
+                    // Check if 'user_id' and 'status' exist in the array
+                    $user_id = isset($app['user_id']) ? $app['user_id'] : 'N/A';
+                    $status = isset($app['status']) ? $app['status'] : 'Unknown';
+
+                    echo "<tr>
+                        <td>{$app['id']}</td>
+                        <td>{$user_id}</td>
+                        <td>{$app['job_id']}</td>
+                        <td>{$status}</td>
+                        <td>
+                            <button class='btn btn-success btn-sm'>Approve</button>
+                            <button class='btn btn-danger btn-sm'>Reject</button>
+                        </td>
+                    </tr>";
+                }
+            } else {
+                echo "<tr><td colspan='5'>No applications found.</td></tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+
 
     <script>
         const dashboardSection = document.getElementById('dashboardSection');
