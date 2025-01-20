@@ -200,8 +200,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit">Login</button>
                 </form>
                 <div class="text-center">
-                    <a href="adminRegst.php">Belum Punya Akun? Daftar Sekarang</a>
-                    <br><br>
+                    <!-- <a href="adminRegst.php">Belum Punya Akun? Daftar Sekarang</a>
+                    <br><br> -->
                     <a href="index.php" class="back-button">Kembali</a>
                 </div>
             </div>

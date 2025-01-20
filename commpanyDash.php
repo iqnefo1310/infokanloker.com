@@ -3,7 +3,7 @@ session_start();
 
 // Ensure the company is logged in
 if (!isset($_SESSION['company_id'])) {
-    header('Location: commpanyLogin.php');
+    header('Location: companyLogin.php');
     exit;
 }
 
@@ -40,16 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_job'])) {
     $category_id = $_POST['category_id'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
-    $description = $_POST['description']; // Ambil deskripsi dari form
+    $description = $_POST['description']; // Get description from form
 
-    // Debugging: Periksa data deskripsi
-    var_dump($description); // Pastikan deskripsi tidak kosong
-
+    // Update query
     $update_query = "UPDATE jobs SET title = ?, category_id = ?, location = ?, salary = ?, description = ? WHERE id = ?";
     $stmt = $conn->prepare($update_query);
-    $stmt->bind_param("sssssi", $title, $category_id, $location, $salary, $description, $edit_id); // Pastikan deskripsi di-bind
+    $stmt->bind_param("sssssi", $title, $category_id, $location, $salary, $description, $edit_id);
     $stmt->execute();
-    header("Location: commpanyDash.php"); // Redirect setelah update
+    header("Location: commpanyDash.php"); // Redirect after update
     exit;
 }
 
@@ -59,18 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_job'])) {
     $category_id = $_POST['category_id'];
     $location = $_POST['location'];
     $salary = $_POST['salary'];
-    $description = $_POST['description']; // Ambil deskripsi dari form
+    $description = $_POST['description']; // Get description from form
 
-    // Debugging: Periksa data deskripsi
-    var_dump($description); // Pastikan deskripsi tidak kosong
-
-    // Query untuk menambahkan pekerjaan
+    // Query to insert new job
     $insert_query = "INSERT INTO jobs (company_id, title, category_id, location, salary, description, created_at) 
                      VALUES (?, ?, ?, ?, ?, ?, NOW())";
     $stmt = $conn->prepare($insert_query);
-    $stmt->bind_param("isssss", $company_id, $title, $category_id, $location, $salary, $description); // Pastikan deskripsi di-bind
+    $stmt->bind_param("isssss", $company_id, $title, $category_id, $location, $salary, $description);
     $stmt->execute();
-    header("Location: commpanyDash.php"); // Redirect setelah menambahkan
+    header("Location: commpanyDash.php"); // Redirect after adding
     exit;
 }
 
@@ -83,6 +78,20 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $company_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+// Handle manage applications
+if (isset($_GET['manage_applications'])) {
+    // Fetch applications
+    $applications_query = "SELECT * FROM applications WHERE job_id IN (SELECT id FROM jobs WHERE company_id = ?)";
+    $stmt = $conn->prepare($applications_query);
+    $stmt->bind_param("i", $company_id);
+    $stmt->execute();
+    $applications_result = $stmt->get_result();
+}
+
+// Check which section is selected
+$add_job = isset($_GET['add_job']);
+$manage_applications = isset($_GET['manage_applications']);
 ?>
 
 <!DOCTYPE html>
@@ -103,6 +112,7 @@ $result = $stmt->get_result();
             <ul>
                 <li><a href="commpanyDash.php">Job Listings</a></li>
                 <li><a href="commpanyDash.php?add_job=true">Add Job</a></li>
+                <li><a href="commpanyDash.php?manage_applications=true">Manage Applications</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
@@ -123,38 +133,49 @@ $result = $stmt->get_result();
             </header>
 
             <!-- Add Job Form -->
-            <?php if (isset($_GET['add_job']) && $_GET['add_job'] == 'true'): ?>
-                <section class="job-form">
-                    <h2>Add Job</h2>
+            <?php if ($add_job): ?>
+                <section class="job-form container mt-5">
+                    <h2 class="text-center mb-4">Add Job</h2>
                     <form action="commpanyDash.php" method="POST">
-                        <label for="title">Job Title:</label>
-                        <input type="text" name="title" required>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Job Title:</label>
+                            <input type="text" name="title" class="form-control" required>
+                        </div>
 
-                        <label for="category_id">Category:</label>
-                        <select name="category_id" required>
-                            <?php
-                            $category_query = "SELECT id, NAME FROM job_categories";
-                            $category_result = $conn->query($category_query);
-                            while ($category = $category_result->fetch_assoc()) {
-                                echo "<option value='{$category['id']}'>{$category['NAME']}</option>";
-                            }
-                            ?>
-                        </select>
+                        <div class="mb-3">
+                            <label for="category_id" class="form-label">Category:</label>
+                            <select name="category_id" class="form-select" required>
+                                <?php
+                                $category_query = "SELECT id, NAME FROM job_categories";
+                                $category_result = $conn->query($category_query);
+                                while ($category = $category_result->fetch_assoc()) {
+                                    echo "<option value='{$category['id']}'>{$category['NAME']}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-                        <label for="location">Location:</label>
-                        <input type="text" name="location" required>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location:</label>
+                            <input type="text" name="location" class="form-control" required>
+                        </div>
 
-                        <label for="salary">Salary:</label>
-                        <input type="number" name="salary" required>
+                        <div class="mb-3">
+                            <label for="salary" class="form-label">Salary:</label>
+                            <input type="number" name="salary" class="form-control" required>
+                        </div>
 
-                        <label for="description">Description:</label>
-                        <textarea name="description" required></textarea>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <textarea name="description" class="form-control" rows="4" required></textarea>
+                        </div>
 
-                        <button type="submit" name="add_job">Add Job</button>
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="add_job" class="btn btn-primary">Add Job</button>
+                        </div>
                     </form>
                 </section>
             <?php endif; ?>
-
             <!-- Edit Job Form -->
             <?php if (isset($_GET['edit_id'])): ?>
                 <section class="job-form">
@@ -191,42 +212,139 @@ $result = $stmt->get_result();
                 </section>
             <?php endif; ?>
 
-            <!-- Job Listings -->
-            <section class="job-listings">
-                <h2>Job Listings</h2>
-                <?php if ($result->num_rows > 0): ?>
-                    <table>
+            <!-- Job Listings (Hidden if Add Job or Manage Applications is clicked) -->
+            <?php if (!$add_job && !$manage_applications): ?>
+                <section class="job-listings">
+                    <h2>Job Listings</h2>
+                    <?php if ($result->num_rows > 0): ?>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Location</th>
+                                    <th>Salary</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = $result->fetch_assoc()): ?>
+                                    <tr>
+                                        <td><?php echo $row['title']; ?></td>
+                                        <td><?php echo $row['category']; ?></td>
+                                        <td><?php echo $row['location']; ?></td>
+                                        <td><?php echo $row['salary']; ?></td>
+                                        <td><?php echo $row['created_at']; ?></td>
+                                        <td>
+                                            <a href="commpanyDash.php?edit_id=<?php echo $row['id']; ?>">Edit</a>
+                                            <a href="commpanyDash.php?delete_id=<?php echo $row['id']; ?>"
+                                                onclick="return confirm('Are you sure?')">Delete</a>
+                                        </td>
+                                    </tr>
+                                <?php endwhile; ?>
+                            </tbody>
+                        </table>
+                    <?php else: ?>
+                        <p>No job listings available.</p>
+                    <?php endif; ?>
+                </section>
+            <?php endif; ?>
+
+            <!-- Manage Applications Section (Hidden if Add Job or Job Listings is clicked) -->
+            <?php
+            // Handle job application management
+            if (isset($_GET['manage_applications'])) {
+                // Fetch applications
+                $applications_query = "SELECT a.id, CONCAT(u.first_name, ' ', u.last_name) AS user_name, j.title AS job_title, a.STATUS, a.applied_at, a.applied_on 
+                           FROM applications a
+                           JOIN detail_users u ON a.applicant_id = u.id
+                           JOIN jobs j ON a.job_id = j.id
+                           WHERE a.job_id IN (SELECT id FROM jobs WHERE company_id = ?)";
+                $stmt = $conn->prepare($applications_query);
+                $stmt->bind_param("i", $company_id);
+                $stmt->execute();
+                $applications_result = $stmt->get_result();
+            }
+            ?>
+
+            <!-- Manage Applications Section -->
+            <?php if ($manage_applications): ?>
+                <div class="manage-applications">
+                    <h2>Manage Applications</h2>
+                    <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Location</th>
-                                <th>Salary</th>
-                                <th>Created At</th>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Job</th>
+                                <th>Status</th>
+                                <th>Applied On</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($row = $result->fetch_assoc()): ?>
+                            <?php while ($app = $applications_result->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['category']; ?></td>
-                                    <td><?php echo $row['location']; ?></td>
-                                    <td><?php echo $row['salary']; ?></td>
-                                    <td><?php echo $row['created_at']; ?></td>
+                                    <td><?php echo $app['id']; ?></td>
+                                    <td><?php echo $app['user_name']; ?></td>
+                                    <td><?php echo $app['job_title']; ?></td>
                                     <td>
-                                        <a href="commpanyDash.php?edit_id=<?php echo $row['id']; ?>">Edit</a>
-                                        <a href="commpanyDash.php?delete_id=<?php echo $row['id']; ?>" 
-                                           onclick="return confirm('Are you sure?')">Delete</a>
+                                        <form action="commpanyDash.php" method="POST">
+                                            <select name="status" class="form-control" onchange="this.form.submit()">
+                                                <option value="dalam_proses" <?php echo ($app['STATUS'] == 'dalam_proses') ? 'selected' : ''; ?>>Dalam Proses</option>
+                                                <option value="diterima" <?php echo ($app['STATUS'] == 'diterima') ? 'selected' : ''; ?>>Diterima</option>
+                                                <option value="ditolak" <?php echo ($app['STATUS'] == 'ditolak') ? 'selected' : ''; ?>>Ditolak</option>
+                                            </select>
+                                            <input type="hidden" name="application_id" value="<?php echo $app['id']; ?>">
+                                        </form>
+                                    </td>
+                                    <td><?php echo $app['applied_on']; ?></td>
+                                    <td>
+                                        <a href="commpanyDash.php?view_resume=<?php echo $app['id']; ?>"
+                                            class="btn btn-info btn-sm">View Resume</a>
+                                        <a href="commpanyDash.php?delete_application=<?php echo $app['id']; ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure you want to delete this application?')">Delete</a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
                     </table>
-                <?php else: ?>
-                    <p>No job listings available.</p>
-                <?php endif; ?>
-            </section>
+                </div>
+            <?php endif; ?>
+
+            <?php
+            // Handle status update for applications
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['status'])) {
+                $status = $_POST['status'];
+                $application_id = $_POST['application_id'];
+
+                // Update application status
+                $update_status_query = "UPDATE applications SET STATUS = ? WHERE id = ?";
+                $stmt = $conn->prepare($update_status_query);
+                $stmt->bind_param("si", $status, $application_id);
+                $stmt->execute();
+
+                // Redirect to the same page after status update
+                header("Location: commpanyDash.php?manage_applications=true");
+                exit;
+            }
+
+            // Handle delete application
+            if (isset($_GET['delete_application'])) {
+                $delete_id = $_GET['delete_application'];
+                $delete_query = "DELETE FROM applications WHERE id = ?";
+                $stmt = $conn->prepare($delete_query);
+                $stmt->bind_param("i", $delete_id);
+                $stmt->execute();
+
+                // Redirect after deletion
+                header("Location: commpanyDash.php?manage_applications=true");
+                exit;
+            }
+            ?>
+
         </div>
     </div>
 </body>

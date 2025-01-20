@@ -71,19 +71,6 @@ CREATE TABLE applications (
 );
 ALTER TABLE applications ADD COLUMN applied_on DATETIME DEFAULT CURRENT_TIMESTAMP;
 
-INSERT INTO applications (job_id, applicant_id, RESUME, STATUS) VALUES
-(1, 1, 'resume_1.pdf', 'dalam_proses'),
-(2, 1, 'resume_2.pdf', 'diterima'),
-(3, 2, 'resume_3.pdf', 'ditolak'),
-(4, 2, 'resume_4.pdf', 'dalam_proses'),
-(5, 3, 'resume_5.pdf', 'dalam_proses'),
-(6, 3, 'resume_6.pdf', 'diterima'),
-(7, 4, 'resume_7.pdf', 'ditolak'),
-(8, 4, 'resume_8.pdf', 'dalam_proses'),
-(9, 5, 'resume_9.pdf', 'diterima'),
-(10, 5, 'resume_10.pdf', 'ditolak');
-
-
 -- Menambahkan kategori pekerjaan ke dalam tabel job_categories
 INSERT INTO job_categories (NAME, description)
 VALUES

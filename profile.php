@@ -38,13 +38,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
+    <nav class="navbar navbar-expand-lg"
+        style="background: linear-gradient(90deg,rgb(4, 23, 110),rgb(193, 231, 250)); color: white;">
+        <div class="container-fluid">
+            <!-- Tambahkan gambar logo di sini -->
+            <a class="navbar-brand d-flex align-items-center" href="dashboard.php" style="color: white;">
+                <img src="assets/2-removebg-preview.png" alt="InfokanLoker Logo"
+                    style="height: 200px; margin-right: 10px;">
+                JOBLoker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.php" style="color: white;">
+                            <i class="fas fa-home"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="job_listings.php" style="color: white;">
+                            <i class="fas fa-briefcase"></i> Job Listings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_applications.php" style="color: white;">
+                            <i class="fas fa-list-alt"></i> My Applications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.php" style="color: white;">
+                            <i class="fas fa-user"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php" style="color: white;">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container mt-5">
         <h2>Your Profile</h2>
         <div class="card">
@@ -53,15 +99,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <form method="POST">
                     <div class="mb-3">
                         <label for="first_name" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo htmlspecialchars($first_name); ?>" required>
+                        <input type="text" class="form-control" id="first_name" name="first_name"
+                            value="<?php echo htmlspecialchars($first_name); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="last_name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo htmlspecialchars($last_name); ?>" required>
+                        <input type="text" class="form-control" id="last_name" name="last_name"
+                            value="<?php echo htmlspecialchars($last_name); ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>" required>
+                        <input type="email" class="form-control" id="email" name="email"
+                            value="<?php echo htmlspecialchars($email); ?>" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
@@ -69,4 +118,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </body>
+
 </html>

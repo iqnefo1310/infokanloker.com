@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
         }
 
         .login-wrapper {
@@ -187,6 +187,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
                 <div class="text-center">
                     <a href="register.php">Don't have an account? Register here</a>
+                    <br><br>
+                    <a href="index.php" class="back-button">Kembali</a>
                 </div>
             </div>
         </div>

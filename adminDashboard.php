@@ -103,11 +103,11 @@
         <button id="btnManageUsers">
             <i class="bi bi-person"></i> Manage Users
         </button>
+        <button id="btnManageCompanies">
+            <i class="bi bi-person"></i> Manage Companies
+        </button>
         <button id="btnManageJobs">
             <i class="bi bi-briefcase"></i> Manage Jobs
-        </button>
-        <button id="btnManageApplications">
-            <i class="bi bi-file-earmark-text"></i> Manage Applications
         </button>
         <a href="logout.php" class="btn btn-danger w-100 mt-3">
             <i class="bi bi-box-arrow-right"></i> Logout
@@ -119,7 +119,7 @@
         <div id="dashboardSection" style="text-align: center;">
             <p>Gunakan tombol di sidebar untuk menavigasi melalui fitur panel admin.</p>
             <img src="assets/hai admin.png" alt="Pamflet" style="max-width: 100%; height: auto; border-radius: 1px;">
-            
+
             <?php
             // Include database connection
             require 'config.php';
@@ -207,6 +207,38 @@
                 </tbody>
             </table>
         </div>
+        <!-- Manage Company Section -->
+        <div id="manageCompaniesSection" class="hidden">
+            <h2>Manage Users</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Company Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $users = $conn->query("SELECT * FROM companies");
+                    while ($user = $users->fetch_assoc()) {
+                        
+                        echo "<tr>
+                            <td>{$user['id']}</td>
+                            <td>{$user['company_name']}</td>
+                            <td>{$user['email']}</td>
+                            <td>
+                                <a href='delete_company.php?id={$user['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this Companies?');\">
+                                    <i class='bi bi-trash'></i> Delete
+                                </a>
+                            </td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Manage Jobs Section -->
         <div id="manageJobsSection" class="hidden">
@@ -221,68 +253,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php
-$jobs = $conn->query("SELECT jobs.id, jobs.title, companies.company_name 
+                    <?php
+                    $jobs = $conn->query("SELECT jobs.id, jobs.title, companies.company_name 
                       FROM jobs 
                       JOIN companies ON jobs.company_id = companies.id");
 
-while ($job = $jobs->fetch_assoc()) {
-    echo "<tr>
-        <td>{$job['id']}</td>
-        <td>{$job['title']}</td>
-        <td>{$job['company_name']}</td>
-        <td>
-            <a href='editJob.php?id={$job['id']}' class='btn btn-warning btn-sm'>
-                <i class='bi bi-pencil-square'></i> Edit
-            </a>
-            <a href='deleteJob.php?id={$job['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this job?');\">
-                <i class='bi bi-trash'></i> Delete
-            </a>
-        </td>
-    </tr>";
-}
-?>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Manage Applications Section -->
-        <div id="manageApplicationsSection" class="hidden">
-            <h2>Manage Applications</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>User</th>
-                        <th>Job</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $applications = $conn->query("SELECT * FROM applications");
-                    while ($app = $applications->fetch_assoc()) {
-                        echo "<tr>
-                            <td>{$app['id']}</td>
-                            <td>{$app['user_id']}</td>
-                            <td>{$app['job_id']}</td>
-                            <td>{$app['status']}</td>
-                            <td>
-                                <a href='edit_application.php?id={$app['id']}' class='btn btn-warning btn-sm'>
-                                    <i class='bi bi-pencil-square'></i> Edit
-                                </a>
-                                <a href='delete_application.php?id={$app['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure you want to delete this application?');\">
-                                    <i class='bi bi-trash'></i> Delete
-                                </a>
-                            </td>
-                        </tr>";
+                    while ($job = $jobs->fetch_assoc()) {
+                    echo 
+                    "<tr>
+                        <td>{$job['id']}</td>
+                        <td>{$job['title']}</td>
+                        <td>{$job['company_name']}</td>
+                        <td>
+                            <a href='commpanyLogin.php?id={$job['id']}' class='btn btn-warning btn-sm' onclick=\"return confirm('Jika Ingin Mengedit Pekerjaan Silahkan Login Ke Perusahaan, Apakah Anda Mau Beralih Sekarang?');\">
+                                <i class='bi bi-pencil-square'></i> Edit
+                            </a>
+                            <a href='commpanyLogin.php?id={$job['id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Jika Ingin Mengedit Pekerjaan Silahkan Login Ke Perusahaan, Apakah Anda Mau Beralih Sekarang?');\">
+                                <i class='bi bi-trash'></i> Delete
+                            </a>
+                        </td>
+                    </tr>";
                     }
                     ?>
                 </tbody>
             </table>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -299,8 +294,8 @@ while ($job = $jobs->fetch_assoc()) {
             toggleSections('manageJobsSection');
         });
 
-        document.getElementById('btnManageApplications').addEventListener('click', function () {
-            toggleSections('manageApplicationsSection');
+        document.getElementById('btnManageCompanies').addEventListener('click', function () {
+            toggleSections('manageCompaniesSection');
         });
 
         function toggleSections(sectionId) {

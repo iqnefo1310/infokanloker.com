@@ -1,3 +1,26 @@
+<?php
+require 'config.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['passwords'];
+
+    $stmt = $conn->prepare("SELECT * FROM companies WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user && password_verify($password, $user['passwords'])) {
+        session_start();
+        $_SESSION['company_id'] = $user['id'];
+        header("Location: commpanyDash.php");
+        exit;
+    } else {
+        $error = "Username atau password salah!";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
