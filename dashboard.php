@@ -58,7 +58,7 @@ $jobs_query->close();
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg" style="background: linear-gradient(90deg,rgb(40, 62, 163),rgb(237, 239, 240)); color: white;">
+<nav class="navbar navbar-expand-lg" style="background: linear-gradient(90deg,rgb(4, 23, 110),rgb(193, 231, 250)); color: white;">
     <div class="container-fluid">
         <!-- Tambahkan gambar logo di sini -->
         <a class="navbar-brand d-flex align-items-center" href="dashboard.php" style="color: white;">

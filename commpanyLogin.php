@@ -1,76 +1,167 @@
-<?php
-session_start();
-require 'config.php';
-
-// Check if the company is already logged in
-if (isset($_SESSION['company_id'])) {
-    header('Location: commpanyDash.php');
-    exit;
-}
-
-// Process login
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitize input to prevent SQL Injection
-    $username = htmlspecialchars(trim($_POST['username']));
-    $password = $_POST['passwords'];
-
-    // Query to check company credentials
-    $query = $conn->prepare("SELECT id, passwords FROM companies WHERE username = ?");
-    $query->bind_param("s", $username);
-    $query->execute();
-    $query->store_result();
-    $query->bind_result($company_id, $hashed_password);
-    $query->fetch();
-
-    if ($query->num_rows > 0 && password_verify($password, $hashed_password)) {
-        // Successful login
-        $_SESSION['company_id'] = $company_id;
-        $_SESSION['company_name'] = $username; // Store company name in session
-        header('Location: commpanyDash.php');
-        exit;
-    } else {
-        $error = "Invalid credentials!";
-    }
-    $query->close();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:rgb(193, 210, 226);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-wrapper {
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+        }
+        .image-container {
+            background-color:rgb(150, 196, 245);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .form-container {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .form-container .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            font-size: 14px;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .input-group i {
+            padding: 10px;
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        .input-group input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            flex: 1;
+            font-size: 14px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .form-container .text-center {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .form-container .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-container .text-center a:hover {
+            text-decoration: underline;
+        }
+        .form-container .back-button {
+            margin-top: 10px;
+            display: inline-block;
+            text-align: center;
+            background-color:rgb(237, 242, 247);
+            color: #ffffff;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .form-container .back-button:hover {
+            background-color:rgb(160, 207, 243);
+        }
+    </style>
 </head>
 <body>
     <!-- Include Header -->
     <?php include('includes/header.php'); ?>
 
     <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <h2 class="text-center">Company Login</h2>
-                <?php if (isset($error)) { echo "<div class='alert alert-danger'>$error</div>"; } ?>
+        <div class="login-wrapper">
+            <!-- Image Container -->
+            <div class="image-container">
+                <img src="assets/loginpage.png" alt="Company Login">
+            </div>
+            <!-- Form Container -->
+            <div class="form-container">
+                <h2>Company Login</h2>
+                <?php if (isset($error)) { echo "<div class='alert'>$error</div>"; } ?>
                 <form method="POST" action="commpanyLogin.php">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                    <div>
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="username" name="username" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="passwords" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="passwords" name="passwords" required>
+                    <div>
+                        <label for="passwords">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="passwords" name="passwords" required>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <button type="submit">Login</button>
                 </form>
-                <div class="mt-3 text-center">
-                <a href="commpanyRegst.php">Don't have an account? Register here</a>
-                <br>
-                <br>
-                <button>
-                    <a href="index.php">Back</a>
-                </button>
-                <br>
+                <div class="text-center">
+                    <a href="commpanyRegst.php">Don't have an account? Register here</a>
+                    <br><br>
+                    <a href="index.php" class="back-button">Back</a>
                 </div>
             </div>
         </div>
@@ -78,8 +169,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Include Footer -->
     <?php include('includes/footer.php'); ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
