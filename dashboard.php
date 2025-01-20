@@ -34,7 +34,6 @@ $jobs_query->close();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-<<<<<<< HEAD
         .job-card {
             border: 1px solid #ddd;
             border-radius: 10px;
@@ -50,64 +49,6 @@ $jobs_query->close();
 
         .job-card p {
             margin: 5px 0;
-=======
-        /* Inline CSS for header and hover effects */
-        .navbar-nav .nav-item .nav-link {
-            font-size: 1.2rem;
-            color: #333;
-            padding: 10px 15px;
-        }
-
-        .navbar-nav .nav-item .nav-link:hover {
-            color: #007bff;
-            background-color:rgb(22, 20, 20);
-            border-radius: 5px;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            color: #333;
-        }
-
-        .navbar-toggler {
-            border-color: #333;
-        }
-
-        .navbar-toggler-icon {
-            background-color: #333;
-        }
-
-        .container h2,
-        .container h4 {
-            color: #333;
-        }
-
-        /* Style for images and descriptions */
-        .image-section {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    background: linear-gradient(135deg,rgb(169, 210, 252), #ffffff); /* Gradasi biru ke putih */
-}
-        .image-item {
-            flex: 1 1 18%;
-            text-align: center;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .image-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .image-item p {
-            margin-top: 10px;
-            font-size: 1rem;
->>>>>>> 9c7a0875f8a5c377f7ec9c659722049ea5aec8de
         }
 
         .job-card .btn {
@@ -215,20 +156,6 @@ $jobs_query->close();
         box-shadow: 0 4px 15px rgba(126, 167, 243, 0.2);
     }
 </style>
-
-<!-- Job Listings -->
-        <h4>Available Job Listings</h4>
-        <?php while ($job = $jobs_result->fetch_assoc()): ?>
-            <div class="job-card">
-                <h5><?php echo htmlspecialchars($job['title']); ?></h5>
-                <p><strong>Company:</strong> <?php echo htmlspecialchars($job['company_name']); ?></p>
-                <p><strong>Location:</strong> <?php echo htmlspecialchars($job['location']); ?></p>
-                <p><strong>Salary:</strong> <?php echo htmlspecialchars($job['salary']); ?></p>
-                <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($job['description'])); ?></p>
-                <a href="apply.php?job_id=<?php echo $job['id']; ?>" class="btn btn-primary">Apply Now</a>
-            </div>
-        <?php endwhile; ?>
-    </div>
 
     <!-- Include Footer -->
     <?php include 'includes/footer.php'; ?>
