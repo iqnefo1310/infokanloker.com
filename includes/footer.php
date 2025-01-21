@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Footer -->
-    <footer style="background: linear-gradient(135deg, #000000, #0d47a1); color: white; padding: 20px 0; text-align: center;">
+    <footer class="foter" style="background: linear-gradient(135deg, #000000, #0d47a1); color: white; padding: 20px 0; text-align: center;">
         <h5 style="font-size: 1.5rem; margin-bottom: 20px;">Ikuti Kami</h5>
         <div style="margin-bottom: 20px;">
             <a href="#" class="social-link facebook" style="color: white; margin: 0 10px; text-decoration: none; font-size: 1.5rem;">
@@ -42,6 +42,16 @@
     <!-- CSS untuk Efek Hover dan Animasi -->
     <style>
         /* Efek Hover untuk masing-masing link */
+/* footer.foter{
+    position: fixed;
+    bottom: 0;
+    width: 100vh;
+    background-color: rgb(4, 23, 110);
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+} */
         .social-link {
             position: relative;
             display: inline-block;

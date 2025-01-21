@@ -134,17 +134,23 @@ $manage_applications = isset($_GET['manage_applications']);
 
             <!-- Add Job Form -->
             <?php if ($add_job): ?>
-                <section class="job-form container mt-5">
-                    <h2 class="text-center mb-4">Add Job</h2>
+                <h2 class="text-center mb-4"
+                    style="font-family: Arial, sans-serif; font-size: 24px; color: #333;text-align:center">Add Job</h2>
+                <section class="job-form container mt-5"
+                    style="max-width: 900px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                     <form action="commpanyDash.php" method="POST">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Job Title:</label>
-                            <input type="text" name="title" class="form-control" required>
+                        <div class="mb-3" style="margin-bottom: 16px;">
+                            <label for="title" class="form-label"
+                                style="display: block; font-weight: bold; margin-bottom: 8px;">Job Title:</label>
+                            <input type="text" name="title" class="form-control"
+                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="category_id" class="form-label">Category:</label>
-                            <select name="category_id" class="form-select" required>
+                        <div class="mb-3" style="margin-bottom: 16px;">
+                            <label for="category_id" class="form-label"
+                                style="display: block; font-weight: bold; margin-bottom: 8px;">Category:</label>
+                            <select name="category_id" class="form-select"
+                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
                                 <?php
                                 $category_query = "SELECT id, NAME FROM job_categories";
                                 $category_result = $conn->query($category_query);
@@ -155,23 +161,43 @@ $manage_applications = isset($_GET['manage_applications']);
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location:</label>
-                            <input type="text" name="location" class="form-control" required>
+                        <div class="mb-3" style="margin-bottom: 16px;">
+                            <label for="location" class="form-label"
+                                style="display: block; font-weight: bold; margin-bottom: 8px;">Location:</label>
+                            <input type="text" name="location" class="form-control"
+                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="salary" class="form-label">Salary:</label>
-                            <input type="number" name="salary" class="form-control" required>
+                        <div class="mb-3" style="margin-bottom: 16px;">
+                            <label for="salary" class="form-label"
+                                style="display: block; font-weight: bold; margin-bottom: 8px;">Salary:</label>
+                            <input type="number" name="salary" class="form-control"
+                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description:</label>
-                            <textarea name="description" class="form-control" rows="4" required></textarea>
+                        <div class="mb-3" style="margin-bottom: 16px;">
+                            <label for="description" class="form-label"
+                                style="display: block; font-weight: bold; margin-bottom: 8px;">Description:</label>
+                            <textarea id="description" name="description" class="form-control"
+                                style="width: 30vw; min-height: 10vh; padding: 10px; border: 1px solid #ccc; border-radius: 4px; resize: none; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5;"
+                                rows="5" placeholder="Enter a detailed description of the job position..."
+                                required></textarea>
                         </div>
-
-                        <div class="d-grid gap-2">
-                            <button type="submit" name="add_job" class="btn btn-primary">Add Job</button>
+                        <script>
+                            // Membuat textarea bertambah besar secara otomatis saat mengetik
+                            const description = document.getElementById('description');
+                            description.addEventListener('input', function () {
+                                // Reset tinggi agar tidak bertambah terus menerus
+                                this.style.height = 'auto';
+                                // Atur tinggi sesuai dengan konten
+                                this.style.height = this.scrollHeight + 'px';
+                            });
+                        </script>
+                        
+                        <div class="d-grid gap-2" style="text-align: center;">
+                            <button type="submit" name="add_job" class="btn btn-primary"
+                                style="background-color: #007bff; border: none; color: #fff; padding: 10px 20px; font-size: 16px; border-radius: 4px; cursor: pointer;">Add
+                                Job</button>
                         </div>
                     </form>
                 </section>

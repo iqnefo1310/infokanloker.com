@@ -20,7 +20,7 @@
 
         /* Header */
         header {
-            background-color:rgb(176, 179, 182);
+            background-color: rgb(176, 179, 182);
             color: white;
             padding: 30px 0;
             text-align: center;
@@ -71,34 +71,44 @@
         }
 
         main h2 {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color:rgb(10, 10, 10);
-    text-align: center; /* Memusatkan teks secara horizontal */
-    transition: color 0.3s ease, transform 0.3s ease; /* Menambahkan transisi untuk efek hover */
-}
-main p {
-    font-size: 3rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color:rgb(243, 245, 248);
-    text-align: center; /* Memusatkan teks secara horizontal */
-    transition: color 0.3s ease, transform 0.3s ease; /* Menambahkan transisi untuk efek hover */
-}
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: rgb(10, 10, 10);
+            text-align: center;
+            /* Memusatkan teks secara horizontal */
+            transition: color 0.3s ease, transform 0.3s ease;
+            /* Menambahkan transisi untuk efek hover */
+        }
 
-main h2:hover {
-    color: #007bff; /* Warna teks saat hover */
-    transform: scale(1.05); /* Membesarkan teks sedikit saat hover */
-}
+        main p {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: rgb(243, 245, 248);
+            text-align: center;
+            /* Memusatkan teks secara horizontal */
+            transition: color 0.3s ease, transform 0.3s ease;
+            /* Menambahkan transisi untuk efek hover */
+        }
+
+        main h2:hover {
+            color: #007bff;
+            /* Warna teks saat hover */
+            transform: scale(1.05);
+            /* Membesarkan teks sedikit saat hover */
+        }
+
         main img {
-        max-height: 900px;
-        width: 70%;
-        object-fit: cover;
-        margin: 0 auto 20px; /* Menggunakan auto untuk margin kiri dan kanan untuk memusatkan gambar */
-        display: block; /* Menjadikan gambar sebagai block element */
-        transition: transform 0.3s ease;
-}
+            max-height: 900px;
+            width: 70%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            /* Menggunakan auto untuk margin kiri dan kanan untuk memusatkan gambar */
+            display: block;
+            /* Menjadikan gambar sebagai block element */
+            transition: transform 0.3s ease;
+        }
 
         main img:hover {
             transform: scale(1.05);
@@ -163,49 +173,60 @@ main h2:hover {
             margin-top: 20px;
             font-size: 1rem;
         }
-
     </style>
 </head>
 
 <body>
 
     <!-- Header -->
-    <header style="background: linear-gradient(135deg,rgb(177, 206, 250),rgb(14, 67, 117)); padding: 20px; text-align: center; color: white;">
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <img src="assets/2-removebg-preview.png" alt="Logo Infokan Loker" style="max-width: 200px; height: auto; margin-bottom: 15px;">
-        <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Welcome to JOB Loker</h1>
-        <div>
-            <a href="login.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
-                <i class="fas fa-briefcase"></i> Cari Pekerjaan
-            </a>
-            <a href="adminLogin.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
-                <i class="fas fa-user-shield"></i> Kelola Admin
-            </a>
-            <a href="commpanyLogin.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
-                <i class="fas fa-building"></i> Kelola Perusahaan
-            </a>
+    <header
+        style="background: linear-gradient(135deg,rgb(177, 206, 250),rgb(14, 67, 117)); padding: 20px; text-align: center; color: white;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <img src="assets/2-removebg-preview.png" alt="Logo Infokan Loker"
+                style="max-width: 200px; height: auto; margin-bottom: 15px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 20px;">Welcome to JOB Loker</h1>
+            <div>
+                <a href="login.php" style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
+                    <i class="fas fa-briefcase"></i> Cari Pekerjaan
+                </a>
+                <a href="adminLogin.php"
+                    style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
+                    <i class="fas fa-user-shield"></i> Kelola Admin
+                </a>
+                <a href="commpanyLogin.php"
+                    style="text-decoration: none; color: white; font-size: 1.2rem; margin: 0 15px;">
+                    <i class="fas fa-building"></i> Kelola Perusahaan
+                </a>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
     <!-- Main content -->
     <main>
         <section style="margin-bottom: 40px;">
             <h2><i class="fas fa-info-circle"></i> Informasi Pekerjaan</h2>
             <img src="assets/1.1 pamplet.jpg" alt="Informasi Pekerjaan">
-            <p>Di Job Loker, kami menyediakan berbagai informasi pekerjaan dari berbagai industri dan perusahaan terkemuka. Anda dapat menemukan pekerjaan yang sesuai dengan keahlian dan pengalaman Anda, serta mendapatkan informasi terkait proses perekrutan dan syarat yang dibutuhkan.</p>
+            <p>Di Job Loker, kami menyediakan berbagai informasi pekerjaan dari berbagai industri dan perusahaan
+                terkemuka. Anda dapat menemukan pekerjaan yang sesuai dengan keahlian dan pengalaman Anda, serta
+                mendapatkan informasi terkait proses perekrutan dan syarat yang dibutuhkan.</p>
         </section>
 
         <section style="margin-bottom: 40px;">
             <h2><i class="fas fa-thumbs-up"></i> Keunggulan Kami</h2>
             <img src="assets/2.jpg" alt="Keunggulan Kami">
-            <p>Job Loker menawarkan kemudahan dalam mencari pekerjaan, dengan fitur pencarian yang canggih, pengelompokan pekerjaan berdasarkan kategori, dan pemberitahuan terbaru tentang lowongan kerja. Kami juga memberikan tips dan panduan untuk membantu Anda dalam proses pencarian kerja dan pengembangan karir.</p>
+            <p>Job Loker menawarkan kemudahan dalam mencari pekerjaan, dengan fitur pencarian yang canggih,
+                pengelompokan pekerjaan berdasarkan kategori, dan pemberitahuan terbaru tentang lowongan kerja. Kami
+                juga memberikan tips dan panduan untuk membantu Anda dalam proses pencarian kerja dan pengembangan
+                karir.</p>
         </section>
 
         <section style="margin-bottom: 40px;">
             <h2><i class="fas fa-building"></i> Informasi Perusahaan</h2>
             <img src="assets/5.jpg" alt="Informasi Perusahaan">
-            <p>Job Loker bekerja sama dengan berbagai perusahaan yang mencari talenta terbaik untuk bergabung dalam tim mereka. Di sini, Anda bisa menemukan perusahaan-perusahaan dengan reputasi baik yang menawarkan kesempatan karir menarik. Kami juga menyediakan informasi lengkap tentang perusahaan yang membuka lowongan kerja.</p>
+            <p>Job Loker bekerja sama dengan berbagai perusahaan yang mencari talenta terbaik untuk bergabung dalam tim
+                mereka. Di sini, Anda bisa menemukan perusahaan-perusahaan dengan reputasi baik yang menawarkan
+                kesempatan karir menarik. Kami juga menyediakan informasi lengkap tentang perusahaan yang membuka
+                lowongan kerja.</p>
         </section>
     </main>
 
@@ -215,4 +236,5 @@ main h2:hover {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
+
 </html>
